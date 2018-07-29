@@ -11,13 +11,14 @@ import MuseUI from 'muse-ui';
 import Toast from 'muse-ui-toast';
 import NProgress from 'muse-ui-progress';
 import 'muse-ui/dist/muse-ui.css';
-import Sidebar from '@/components/Sidebar';
+// import FitText from 'vue-fit-text/index.js';
 
 Vue.config.productionTip = false;
 // Vue.use(iView);
 Vue.use(MuseUI);
 Vue.use(Toast);
 Vue.use(NProgress);
+// Vue.use(FitText);
 
 axios.defaults.auth = {
   username: '',
