@@ -1,106 +1,105 @@
 <template>
-  <div id="post" :style="style">
-    <mu-container>
-      <mu-paper class="post-paper" :z-depth="4">
-        <mu-container class="post-container">
-          <mu-row class="level1">
-            <mu-col span="12">
-              <div class="grid-cell main-frame">
-                <mu-row class="title-row">
-                  <mu-col span="12">
-                    <div class="title-frame">
-                      <div style="background-color: red; position:absolute; height:40%; width:100%; bottom:20px;">
-                        <mu-flex class="flex-wrapper" justify-content="start">
-                          <mu-flex class="flex-demo" justify-content="center">left</mu-flex>
-                        </mu-flex>
-                        <mu-flex class="flex-wrapper" justify-content="center">
-                          <mu-flex class="flex-demo" justify-content="center">center</mu-flex>
-                        </mu-flex>
-                        <mu-flex class="flex-wrapper" justify-content="end">
-                          <mu-flex class="flex-demo" justify-content="end">right</mu-flex>
-                        </mu-flex>
-                        <mu-flex class="flex-wrapper" justify-content="end">
-                          <mu-flex class="flex-demo" justify-content="end">right</mu-flex>
-                        </mu-flex>
-                      </div>
-                    </div>
-                  </mu-col>
-                </mu-row>
-                <mu-row class="content-row">
-                </mu-row>
-              </div>
-            </mu-col>
-          </mu-row>
-          <mu-row class="level1">
-            <mu-col span="12">
-              <div class="grid-cell"></div>
-            </mu-col>
-          </mu-row>
-        </mu-container>
+  <div class="post-div">
+    <mu-container fluid>
+      <mu-paper :z-depth="4">
+        <div class="main-post">
+          <h1 class="h1-title">
+            {{ post.title }}
+          </h1>
+          <span class="post-info first"><mu-icon class="info-icon" size="16" value="person" ></mu-icon>{{ post.author }}</span>
+          <span class="post-info last"><mu-icon class="info-icon" size="16" value="date_range" ></mu-icon>{{ post_time }}</span>
+          <!-- <span class="post-info last"><mu-icon class="info-icon" size="16" value="person" ></mu-icon>{{ post.author }}</span> -->
+          <div class="post-content">
+            <markdown-render :source="post.content" />
+          </div>
+        </div>
+        <div class="main-comment">
+          <comment v-for="comment in post.comments" :key="comment.id" :body="comment"/>
+        </div>
       </mu-paper>
     </mu-container>
   </div>
 </template>
+
 <style lang="less">
-.post-paper {
-  border-style: none;
-  margin: 0px;
-  border-radius: 10px;
-  border-width: 0px;
+.main-post {
+  padding: 10px;
 }
 
-.post-container {
-  padding: 0px;
-  .level1 {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0px;
-    }
-  }
-  .grid-cell {
-    height: 600px;
-    background: rgba(0, 255, 255, 0.8);
+.h1-title {
+  color: black;
+  margin: 0px;
+}
 
-    border-radius: 10px;
+.post-info {
+  color: grey;
+  margin: 0px;
+  font-size: 14px;
+  border-right: 1px solid grey;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+.post-info.first {
+  padding-left: 0em;
+}
+.post-info.last {
+  padding-right: 0em;
+  border-right: none;
+}
+.post-info > .info-icon {
+  vertical-align: middle;
+  color: darkslategray;
+}
+.post-content {
+  margin-top: 2em;
+  text-align: left;
+  padding-right: 10em;
+  padding-left: 10em;
+  @media screen and (max-width: 990px) {
+    padding-right: 1em;
+    padding-left: 1em;
   }
-  .main-frame {
+}
+
+.post-div {
+  text-align: center;
+}
+
+.main-comment {
+  margin-top: 3em;
+  margin-bottom: 2em;
+  padding-right: 10em;
+  padding-left: 10em;
+  @media screen and (max-width: 990px) {
+    padding-right: 1em;
+    padding-left: 1em;
   }
-  .title-frame {
-    width: 100%;
-    background: red;
-    height: 250px;
-    background-image: url("/static/testheader.png");
-    background-size: cover;
-    background-position: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 10px 10px;
-  }
+  padding-bottom: 2em;
 }
 </style>
 
 <script>
 import VueMarkdown from "vue-markdown";
+import MarkdownRender from "@/components/Markdown";
+import Comment from "@/components/Comment";
+import moment from "moment";
 
 export default {
-  name: "post",
   props: ["id"],
   data() {
     return {
-      post: {},
-      style: {
-        background: "#eee",
-        padding: "20px",
-        textAlign: "left"
-      }
+      post: {}
     };
   },
   components: {
-    VueMarkdown
+    "vue-markdown": VueMarkdown,
+    "markdown-render": MarkdownRender,
+    comment: Comment
   },
-  methods: {
-    back_to_home() {
-      this.$router.push("/");
+  method: {},
+  computed: {
+    post_time() {
+      return moment(this.post.post_time).format("YY-MM-DD");
     }
   },
   created() {
