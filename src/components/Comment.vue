@@ -48,7 +48,11 @@
     .content {
       display: block;
       height: auto;
+      width: 100%;
       margin: 1em;
+      hr {
+        color: grey;
+      }
       #username {
         font-weight: bold;
       }

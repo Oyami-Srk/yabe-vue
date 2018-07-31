@@ -1,6 +1,8 @@
 <template>
   <div id="login">
-    <mu-container>
+    <mu-container fluid>
+      <mu-flex class="flex-wrapper" justify-content="center" align-items="center">
+    <mu-flex class="flex-demo" justify-content="center" >
       <mu-paper class="login-paper" :z-depth="5">
         <mu-form ref="form" :model="validateForm" class="login-form">
           <mu-form-item icon="account_circle" label="用户名" prop="username" :rules="usernameRules">
@@ -18,14 +20,36 @@
           </mu-flex>
         </mu-form>
       </mu-paper>
+      </mu-flex>
+        </mu-flex>
     </mu-container>
   </div>
 </template>
-<style>
-.login-paper {
-  padding: 20px;
-  padding-bottom: 0px;
-  padding-top: 5px;
+<style lang="less">
+#login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  transform: translate(-50%, -50%);
+  @media screen and (max-width: 600px) {
+    left: 0%;
+    transform: translate(0%, -50%);
+    width: 100%;
+  }
+  .login-paper {
+    padding: 10vh;
+    padding-top: 3vh;
+    padding-bottom: 0vh;
+    @media screen and (max-width: 400px) {
+      padding: 3vh;
+      padding-bottom: 0vh;
+    }
+    @media screen and (max-width: 280px) {
+      padding: 0vh;
+      padding-top: 3vh;
+    }
+  }
 }
 </style>
 
