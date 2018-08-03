@@ -1,6 +1,6 @@
 <template>
-  <mu-container>
-  <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
+  <div id="sidebar">
+  <mu-drawer id= "drawer" :open.sync="open" :docked="docked" :right="position === 'right'">
     <mu-list>
       <mu-list-item button>
         <mu-list-item-title>Menu Item 1</mu-list-item-title>
@@ -13,9 +13,12 @@
       </mu-list-item>
     </mu-list>
   </mu-drawer>
-</mu-container>
+  </div>
 </template>
-<style>
+<style lang="less">
+#drawer {
+  margin-top: 64px;
+}
 </style>
 <script>
 export default {
