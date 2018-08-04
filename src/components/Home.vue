@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    Home page
+    aa
   </div>
 </template>
 
@@ -10,7 +10,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      post: this.source
+    };
+  },
+  props: {
+    source: {
+      type: Object
+    }
   }
 };
 </script>

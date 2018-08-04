@@ -1,16 +1,19 @@
 <template>
   <div id="allposts">
-    <p>Hello world</p>
-    {{ msg }}
-    <Button @click="logout">注销</Button>
+    <post-summary v-for="post in posts" :key="post.id" :source="post" style="margin: 2em;"/>
   </div>
 </template>
 <script>
+import PostSummary from "@/components/PostSummary";
+
 export default {
   name: "AllPosts",
   data() {
     return {
-      msg: ""
+      posts: {},
+      count: 0,
+      next: "",
+      prev: ""
     };
   },
   methods: {
@@ -19,11 +22,22 @@ export default {
       this.$router.push("/login");
     }
   },
+  components: {
+    "post-summary": PostSummary
+  },
   created() {
     this.$axios
-      .get("/api/get_all_posts")
+      .get("/api/get_all_posts", {
+        params: {
+          summary: true
+        }
+      })
       .then(response => {
-        this.msg = response.data;
+        console.log(response);
+        this.posts = response.data.posts;
+        this.count = response.data.count;
+        this.next = response.data.next;
+        this.prev = response.data.prev;
       })
       .catch(error => {
         console.log(error);
